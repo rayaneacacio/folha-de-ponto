@@ -1,0 +1,246 @@
+:root {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #1e293b;
+  background: #f5f7fb;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-optical-sizing: auto;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app {
+  width: min(1100px, 100% - 32px);
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+.app-header {
+  margin-bottom: 28px;
+}
+
+.app-header h1 {
+  margin: 6px 0;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  letter-spacing: -1.5px;
+}
+
+.app-header p {
+  color: #64748b;
+}
+
+.app-header .eyebrow {
+  color: #4f46e5;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.panel,
+.timesheet,
+.history {
+  margin-bottom: 24px;
+  padding: 24px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 18px rgb(15 23 42 / 4%);
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 1.15rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #475569;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+input,
+select {
+  width: 100%;
+  min-width: 0;
+  padding: 11px 12px;
+  color: #1e293b;
+  background: white;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+}
+
+input:focus,
+select:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgb(99 102 241 / 12%);
+}
+
+button {
+  padding: 12px 16px;
+  color: white;
+  background: #4f46e5;
+  border: none;
+  border-radius: 8px;
+  font-weight: 650;
+}
+
+button:hover {
+  background: #4338ca;
+}
+
+.employee-form > button {
+  align-self: end;
+}
+
+.panel > label {
+  max-width: 440px;
+}
+
+.week-selector p {
+  margin-bottom: 0;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.pix-key {
+  overflow-wrap: anywhere;
+}
+
+.secondary {
+  flex-shrink: 0;
+  color: #4338ca;
+  background: #eef2ff;
+}
+
+.secondary:hover {
+  background: #e0e7ff;
+}
+
+.rate-field {
+  max-width: 260px;
+  margin-bottom: 24px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th,
+td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+  color: #64748b;
+  background: #f8fafc;
+  font-size: 0.8rem;
+}
+
+td input {
+  max-width: 160px;
+}
+
+tfoot td {
+  background: #f8fafc;
+  font-weight: 750;
+}
+
+.history-list {
+  display: grid;
+  gap: 10px;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  color: #1e293b;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  text-align: left;
+}
+
+.history-item:hover {
+  color: #3730a3;
+  background: #eef2ff;
+}
+
+.history-item span {
+  display: grid;
+  gap: 5px;
+}
+
+.history-item small {
+  color: #64748b;
+  font-weight: 400;
+}
+
+.empty-state,
+.feedback {
+  color: #64748b;
+  text-align: center;
+}
+
+.feedback {
+  color: #047857;
+}
+
+@media (max-width: 720px) {
+  .app {
+    width: calc(100% - 20px);
+    padding: 24px 0;
+  }
+
+  .employee-form {
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+
+  .panel,
+  .timesheet,
+  .history {
+    padding: 16px;
+  }
+
+  th,
+  td {
+    padding: 12px 8px;
+    white-space: nowrap;
+  }
+
+  .history-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

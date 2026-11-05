@@ -1,0 +1,32 @@
+.pix-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 20px 0;
+  padding: 16px;
+  background: #f8fafc;
+  border-radius: 10px;
+}
+
+.pix-details div {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.pix-details span {
+  color: #64748b;
+  font-size: 0.8rem;
+}
+
+.pix-status {
+  color: green;
+}
+
+@media (max-width: 720px) {
+  .employee-details {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
