@@ -1,5 +1,4 @@
-
-import {  useState } from 'react';
+import { useState } from 'react';
 
 import {
   WEEK_DAYS,
@@ -7,10 +6,10 @@ import {
   type WeekDay,
 } from '../../../types';
 
+import { locales } from '../locales';
 import '../styles.css';
 import { formatDuration } from '../utils/format-duration';
 import { parseDuration } from '../utils/parse-duration';
-
 
 interface WeeklyTimesheetProps {
   day: WeekDay;
@@ -23,6 +22,8 @@ export const Interval = ({
   minutes,
   onMinutesChange,
 }: WeeklyTimesheetProps) => {
+  const { intervalPlaceholder, invalidDurationError } = locales;
+
   const [durationInputs, setDurationInputs] = useState<
     Record<WeekDay, string>
   >(() => {
@@ -31,7 +32,9 @@ export const Interval = ({
     ) as Record<WeekDay, string>;
   });
 
-  const [durationErrors, setDurationErrors] = useState<Partial<Record<WeekDay, string>>>({});
+  const [durationErrors, setDurationErrors] = useState<
+    Partial<Record<WeekDay, string>>
+  >({});
 
   const handleDurationChange = (day: WeekDay, value: string) => {
     setDurationInputs((current) => ({
@@ -79,7 +82,7 @@ export const Interval = ({
     if (parsed === null) {
       setDurationErrors((current) => ({
         ...current,
-        [day]: 'Informe uma duração válida. Ex.: 7, 3h30 ou 70min.',
+        [day]: invalidDurationError,
       }));
       return;
     }
@@ -101,14 +104,18 @@ export const Interval = ({
     <div>
       <input
         value={durationInputs[day]}
-        onChange={(event) => handleDurationChange(day, event.target.value)}
+        onChange={(event) =>
+          handleDurationChange(day, event.target.value)
+        }
         onFocus={() => handleDurationFocus(day)}
         onBlur={() => handleDurationBlur(day)}
-        placeholder='ex: 2h ou 120min'
+        placeholder={intervalPlaceholder}
       />
 
       {durationErrors[day] && (
-        <small role="alert" className="field-error">{durationErrors[day]}</small>
+        <small role="alert" className="field-error">
+          {durationErrors[day]}
+        </small>
       )}
     </div>
   );

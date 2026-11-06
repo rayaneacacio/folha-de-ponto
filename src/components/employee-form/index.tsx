@@ -1,12 +1,24 @@
 import { useState, type FormEvent } from 'react';
 import type { Employee } from '../../types';
 import './styles.css';
+import { locales } from './locales';
 
 interface EmployeeFormProps {
   onAdd: (employee: Employee) => void;
 }
 
 export const EmployeeForm = ({ onAdd }: EmployeeFormProps) => {
+  const {
+    addEmployeeLabel, 
+    title, 
+    nameLabel,
+    pixKeyLabel, 
+    pixKeyPlaceholder, 
+    hourlyRateLabel, 
+    hourlyRatePlaceholder, 
+    submitButtonLabel,
+  } = locales;
+
   const [name, setName] = useState('');
   const [pixKey, setPixKey] = useState('');
   const [hourlyRate, setHourlyRate] = useState('');
@@ -43,51 +55,51 @@ export const EmployeeForm = ({ onAdd }: EmployeeFormProps) => {
 
   return (
     <>
-      <button onClick={() => setModalIsOpen(true)}>Adicionar funcionario</button>
+      <button onClick={() => setModalIsOpen(true)}>{addEmployeeLabel}</button>
       
       {modalIsOpen &&
         <div className="container">
           <div className="modal">
             <header className='header-modal'>
-              <h2>Cadastrar funcionário</h2> 
+              <h2>{title}</h2> 
               <button onClick={() => setModalIsOpen(false)}>X</button>
             </header>
 
             <form className="employee-form" onSubmit={handleSubmit}>
               <label>
-                Nome
+                {nameLabel}
                 <input
                   value={name}
                   onChange={(event) => setName(event.target.value)}
-                  placeholder="Nome"
+                  placeholder={nameLabel}
                   required
                 />
               </label>
 
               <label>
-                Chave Pix
+                {pixKeyLabel}
                 <input
                   value={pixKey}
                   onChange={(event) => setPixKey(event.target.value)}
-                  placeholder="CPF, e-mail, telefone ou chave aleatória"
+                  placeholder={pixKeyPlaceholder}
                   required
                 />
               </label>
 
               <label>
-                Valor da hora (R$)
+                {hourlyRateLabel}
                 <input
                   type="number"
                   min="0"
                   step="0.01"
                   value={hourlyRate}
                   onChange={(event) => setHourlyRate(event.target.value)}
-                  placeholder="18.00"
+                  placeholder={hourlyRatePlaceholder}
                   required
                 />
               </label>
 
-              <button className='register' type="submit">Adicionar funcionário</button>
+              <button className='register' type="submit">{submitButtonLabel}</button>
             </form>
           </div>
         </div>

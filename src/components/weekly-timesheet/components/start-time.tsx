@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import type { WeekDay } from '../../../types';
+import { locales } from '../locales';
 import { parseDuration } from '../utils/parse-duration';
 import { formatDuration } from '../utils/format-duration';
 import { useTimesheet } from '../context';
@@ -9,8 +10,10 @@ interface EndTimeProps {
   day: WeekDay;
 }
 
-export const StartTime = ({day}: EndTimeProps) => {
-  const {startTimes, setStartTimes} = useTimesheet();
+export const StartTime = ({ day }: EndTimeProps) => {
+  const { startTimePlaceholder, startTimeLabel, invalidTimeError } = locales;
+
+  const { startTimes, setStartTimes } = useTimesheet();
   const value = startTimes[day];
   const [error, setError] = useState('');
 
@@ -30,11 +33,10 @@ export const StartTime = ({day}: EndTimeProps) => {
     if (value === '') return setError('');
 
     const parsed = parseDuration(value);
-
     const timeMatch = formatDuration(parsed ? parsed : 0);
 
     if (!timeMatch) {
-      setError('Informe um horário válido. Ex.: 17:30.');
+      setError(invalidTimeError);
       return;
     }
 
@@ -51,9 +53,9 @@ export const StartTime = ({day}: EndTimeProps) => {
         value={value}
         onChange={(event) => handleChange(event.target.value)}
         onBlur={handleBlur}
-        aria-label={`Horário de início de ${day}`}
+        aria-label={startTimeLabel.replace('{{day}}', day)}
         aria-invalid={Boolean(error)}
-        placeholder='ex: 7h'
+        placeholder={startTimePlaceholder}
       />
 
       {error && (

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import type { WeekDay } from '../../../types';
+import { locales } from '../locales';
 import { parseDuration } from '../utils/parse-duration';
 import { formatDuration } from '../utils/format-duration';
 import { useTimesheet } from '../context';
@@ -9,8 +10,10 @@ interface EndTimeProps {
   day: WeekDay;
 }
 
-export const EndTime = ({day}: EndTimeProps) => {
-  const {endTimes, setEndTimes} = useTimesheet();
+export const EndTime = ({ day }: EndTimeProps) => {
+  const { endTimePlaceholder, endTimeLabel, invalidTimeError } = locales;
+
+  const { endTimes, setEndTimes } = useTimesheet();
   const value = endTimes[day];
   const [error, setError] = useState('');
 
@@ -28,16 +31,15 @@ export const EndTime = ({day}: EndTimeProps) => {
 
   const handleBlur = () => {
     if (value === '') return setError('');
-  
+
     const parsed = parseDuration(value);
-  
     const timeMatch = formatDuration(parsed ? parsed : 0);
-  
+
     if (!timeMatch) {
-      setError('Informe um horário válido. Ex.: 17:30.');
+      setError(invalidTimeError);
       return;
     }
-  
+
     setError('');
     setEndTimes((current) => ({
       ...current,
@@ -51,9 +53,9 @@ export const EndTime = ({day}: EndTimeProps) => {
         value={value}
         onChange={(event) => handleChange(event.target.value)}
         onBlur={handleBlur}
-        aria-label={`Horário de saída de ${day}`}
+        aria-label={endTimeLabel.replace('{{day}}', day)}
         aria-invalid={Boolean(error)}
-        placeholder='ex: 17h'
+        placeholder={endTimePlaceholder}
       />
 
       {error && (

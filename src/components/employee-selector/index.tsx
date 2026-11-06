@@ -1,4 +1,5 @@
 import type { Employee } from '../../types';
+import { locales } from './locales';
 
 interface EmployeeSelectorProps {
   employees: Employee[];
@@ -11,14 +12,16 @@ export const EmployeeSelector = ({
   selectedId,
   onSelect,
 }: EmployeeSelectorProps) => {
+  const {employeeSelectedLabel, selectAnEmployeeLabel} = locales;
+  
   return (
     <label>
-      Funcionário selecionado
+      {employeeSelectedLabel}
       <select
         value={selectedId}
         onChange={(event) => onSelect(event.target.value)}
       >
-        <option value="">Selecione um funcionário</option>
+        <option value="">{selectAnEmployeeLabel}</option>
 
         {employees.map((employee) => (
           <option key={employee.id} value={employee.id}>
