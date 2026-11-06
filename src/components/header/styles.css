@@ -1,0 +1,21 @@
+
+.header {
+  margin-bottom: 28px;
+}
+
+.header h1 {
+  margin: 6px 0;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  letter-spacing: -1.5px;
+}
+
+.header p {
+  color: #64748b;
+}
+
+.eyebrow {
+  color: #4f46e5;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}

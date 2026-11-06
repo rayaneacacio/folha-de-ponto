@@ -1,21 +1,18 @@
-export function calculatePayment(
+export const calculatePayment = (
   minutes: number,
   hourlyRate: number,
-): number {
+): number => {
   return (minutes / 60) * hourlyRate;
-}
+};
 
-export function formatCurrency(value: number): string {
-  console.log('🚀 ~ formatCurrency ~ value:', value);
-  const tetse=  new Intl.NumberFormat('pt-BR', {
+export const formatCurrency = (value: number): string => {
+  return new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
   }).format(value);
-  console.log('🚀 ~ formatCurrency ~ tetse:', tetse);
-  return tetse;
-}
+};
 
-export function getWeekStart(date: string): string {
+export const getWeekStart = (date: string): string => {
   const result = new Date(`${date}T12:00:00`);
   const day = result.getDay();
 
@@ -29,19 +26,19 @@ export function getWeekStart(date: string): string {
   const dayOfMonth = String(result.getDate()).padStart(2, '0');
 
   return `${year}-${month}-${dayOfMonth}`;
-}
+};
 
-export function formatDate(date: string): string {
+export const formatDate = (date: string): string => {
   return new Intl.DateTimeFormat('pt-BR', {
     timeZone: 'UTC',
   }).format(new Date(`${date}T12:00:00Z`));
-}
+};
 
-export function getToday(): string {
+export const getToday = (): string => {
   const now = new Date();
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, '0');
   const day = String(now.getDate()).padStart(2, '0');
 
   return `${year}-${month}-${day}`;
-}
+};

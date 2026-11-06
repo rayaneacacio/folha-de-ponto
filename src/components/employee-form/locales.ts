@@ -8,4 +8,6 @@ export const locales = {
   hourlyRateLabel: 'Valor da hora (R$)',
   hourlyRatePlaceholder: '18.00',
   submitButtonLabel: 'Adicionar funcionário',
+  addEmployeeError: 'Não foi possível salvar o funcionário.',
+  isSubmittingLabel: 'Salvando...',
 };

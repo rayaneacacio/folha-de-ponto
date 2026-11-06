@@ -7,6 +7,7 @@ export const locales = {
   intervalPlaceholder: 'Ex.: 2h ou 120min',
   invalidDurationError: 'Informe uma duração válida. Ex.: 7, 3h30 ou 70min.',
   copyButton: 'Copiar Pix',
+  pixLabel: 'Chave Pix',
   pixCopied: 'Chave Pix copiada!',
   pixError: 'Não foi possível copiar. Verifique a permissão do navegador.',
   hourlyRateLabel: 'Valor da hora (R$)',

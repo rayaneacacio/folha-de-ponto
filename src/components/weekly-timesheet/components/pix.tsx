@@ -8,11 +8,11 @@ interface WeeklyTimesheetProps {
 }
 
 export const Pix = ({ employee }: WeeklyTimesheetProps) => {
-  const { copyButton, pixCopied, pixError } = locales;
+  const { pixLabel, copyButton, pixCopied, pixError } = locales;
 
   const [pixMessage, setPixMessage] = useState('');
 
-  async function handleCopyPix() {
+  const handleCopyPix = async() => {
     if (!employee) return;
 
     try {
@@ -22,13 +22,13 @@ export const Pix = ({ employee }: WeeklyTimesheetProps) => {
     } catch {
       setPixMessage(pixError);
     }
-  }
+  };
 
   return (
     <div className="pix">
       <div className="pix-details">
         <div>
-          <span>Chave Pix</span>
+          <span>{pixLabel}</span>
           <strong className="pix-key">{employee.pixKey}</strong>
         </div>
 

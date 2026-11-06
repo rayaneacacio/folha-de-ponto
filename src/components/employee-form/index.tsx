@@ -1,30 +1,31 @@
 import { useState, type FormEvent } from 'react';
-import type { Employee } from '../../types';
-import './styles.css';
+import { useEmployees } from '../../contexts/employee-context';
 import { locales } from './locales';
+import './styles.css';
 
-interface EmployeeFormProps {
-  onAdd: (employee: Employee) => void;
-}
-
-export const EmployeeForm = ({ onAdd }: EmployeeFormProps) => {
+export const EmployeeForm = () => {
   const {
-    addEmployeeLabel, 
-    title, 
+    addEmployeeLabel,
+    title,
     nameLabel,
-    pixKeyLabel, 
-    pixKeyPlaceholder, 
-    hourlyRateLabel, 
-    hourlyRatePlaceholder, 
+    pixKeyLabel,
+    pixKeyPlaceholder,
+    hourlyRateLabel,
+    hourlyRatePlaceholder,
     submitButtonLabel,
+    addEmployeeError,
+    isSubmittingLabel,
   } = locales;
+
+  const { createEmployee } = useEmployees();
 
   const [name, setName] = useState('');
   const [pixKey, setPixKey] = useState('');
   const [hourlyRate, setHourlyRate] = useState('');
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const normalizedName = name.trim();
@@ -37,32 +38,48 @@ export const EmployeeForm = ({ onAdd }: EmployeeFormProps) => {
       hourlyRate.trim() === '' ||
       !Number.isFinite(rate) ||
       rate < 0
-    )
+    ) {
       return;
+    }
 
-    onAdd({
-      id: crypto.randomUUID(),
-      name: normalizedName,
-      pixKey: normalizedPixKey,
-      hourlyRate: rate,
-    });
+    try {
+      setIsSubmitting(true);
 
-    setName('');
-    setPixKey('');
-    setHourlyRate('');
-    setModalIsOpen(false);
+      await createEmployee({
+        name: normalizedName,
+        pixKey: normalizedPixKey,
+        hourlyRate: rate,
+      });
+
+      setName('');
+      setPixKey('');
+      setHourlyRate('');
+      setModalIsOpen(false);
+    } catch {
+      alert(addEmployeeError);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <>
-      <button onClick={() => setModalIsOpen(true)}>{addEmployeeLabel}</button>
-      
-      {modalIsOpen &&
+      <button type="button" onClick={() => setModalIsOpen(true)}>
+        {addEmployeeLabel}
+      </button>
+
+      {modalIsOpen && (
         <div className="container">
           <div className="modal">
-            <header className='header-modal'>
-              <h2>{title}</h2> 
-              <button onClick={() => setModalIsOpen(false)}>X</button>
+            <header className="header-modal">
+              <h2>{title}</h2>
+              <button
+                type="button"
+                onClick={() => setModalIsOpen(false)}
+                disabled={isSubmitting}
+              >
+                X
+              </button>
             </header>
 
             <form className="employee-form" onSubmit={handleSubmit}>
@@ -99,11 +116,13 @@ export const EmployeeForm = ({ onAdd }: EmployeeFormProps) => {
                 />
               </label>
 
-              <button className='register' type="submit">{submitButtonLabel}</button>
+              <button className="register" type="submit" disabled={isSubmitting}>
+                {isSubmitting ? isSubmittingLabel : submitButtonLabel}
+              </button>
             </form>
           </div>
         </div>
-      }
+      )}
     </>
   );
 };

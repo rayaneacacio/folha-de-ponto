@@ -36,3 +36,14 @@
 .register {
   margin-top: 30px;
 }
+
+.employee-form > button {
+  align-self: end;
+}
+
+@media (max-width: 720px) {
+  .employee-form {
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+}

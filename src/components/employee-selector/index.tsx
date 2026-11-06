@@ -12,12 +12,13 @@ export const EmployeeSelector = ({
   selectedId,
   onSelect,
 }: EmployeeSelectorProps) => {
-  const {employeeSelectedLabel, selectAnEmployeeLabel} = locales;
-  
+  const { employeeSelectedLabel, selectAnEmployeeLabel } = locales;
+
   return (
-    <label>
+    <label htmlFor="employee-select">
       {employeeSelectedLabel}
       <select
+        id="employee-select"
         value={selectedId}
         onChange={(event) => onSelect(event.target.value)}
       >

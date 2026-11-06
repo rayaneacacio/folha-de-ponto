@@ -33,27 +33,6 @@ button {
   padding: 40px 0;
 }
 
-.app-header {
-  margin-bottom: 28px;
-}
-
-.app-header h1 {
-  margin: 6px 0;
-  font-size: clamp(2rem, 5vw, 2.8rem);
-  letter-spacing: -1.5px;
-}
-
-.app-header p {
-  color: #64748b;
-}
-
-.app-header .eyebrow {
-  color: #4f46e5;
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-}
-
 .panel,
 .timesheet,
 .history {
@@ -110,18 +89,8 @@ button:hover {
   background: #4338ca;
 }
 
-.employee-form > button {
-  align-self: end;
-}
-
 .panel > label {
   max-width: 440px;
-}
-
-.week-selector p {
-  margin-bottom: 0;
-  color: #64748b;
-  font-size: 0.875rem;
 }
 
 .pix-key {
@@ -220,11 +189,6 @@ tfoot td {
   .app {
     width: calc(100% - 20px);
     padding: 24px 0;
-  }
-
-  .employee-form {
-    grid-template-columns: 1fr;
-    padding: 18px;
   }
 
   .panel,

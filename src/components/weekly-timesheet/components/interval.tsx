@@ -1,17 +1,12 @@
 import { useState } from 'react';
 
-import {
-  WEEK_DAYS,
-  type DailyMinutes,
-  type WeekDay,
-} from '../../../types';
-
+import { type DailyMinutes, type WeekDay } from '../../../types';
 import { locales } from '../locales';
 import '../styles.css';
 import { formatDuration } from '../utils/format-duration';
 import { parseDuration } from '../utils/parse-duration';
 
-interface WeeklyTimesheetProps {
+interface IntervalProps {
   day: WeekDay;
   minutes: DailyMinutes;
   onMinutesChange: (day: WeekDay, value: number) => void;
@@ -21,100 +16,62 @@ export const Interval = ({
   day,
   minutes,
   onMinutesChange,
-}: WeeklyTimesheetProps) => {
+}: IntervalProps) => {
   const { intervalPlaceholder, invalidDurationError } = locales;
 
-  const [durationInputs, setDurationInputs] = useState<
-    Record<WeekDay, string>
-  >(() => {
-    return Object.fromEntries(
-      WEEK_DAYS.map((day) => [day, formatDuration(minutes[day])]),
-    ) as Record<WeekDay, string>;
-  });
+  const currentMinutes = minutes[day] ?? 0;
 
-  const [durationErrors, setDurationErrors] = useState<
-    Partial<Record<WeekDay, string>>
-  >({});
+  const [prevMinutes, setPrevMinutes] = useState(currentMinutes);
+  const [inputValue, setInputValue] = useState(() => formatDuration(currentMinutes));
+  const [error, setError] = useState<string | null>(null);
 
-  const handleDurationChange = (day: WeekDay, value: string) => {
-    setDurationInputs((current) => ({
-      ...current,
-      [day]: value,
-    }));
+  if (prevMinutes !== currentMinutes) {
+    setPrevMinutes(currentMinutes);
+    setInputValue(formatDuration(currentMinutes));
+    setError(null);
+  }
 
-    if (value.trim() === '') {
-      setDurationErrors((current) => ({ ...current, [day]: undefined }));
+  const handleChange = (value: string) => {
+    setInputValue(value);
+    if (error) setError(null);
+
+    if (value.trim() === '') onMinutesChange(day, 0);
+  };
+
+  const handleBlur = () => {
+    const trimmed = inputValue.trim();
+
+    if (trimmed === '') {
+      setError(null);
       onMinutesChange(day, 0);
       return;
     }
 
-    setDurationErrors((current) => ({ ...current, [day]: undefined }));
-  };
-
-  const handleDurationFocus = (day: WeekDay) => {
-    if (durationInputs[day] === '') {
-      setDurationInputs((current) => ({
-        ...current,
-        [day]: '',
-      }));
-    }
-  };
-
-  const handleDurationBlur = (day: WeekDay) => {
-    const value = durationInputs[day].trim();
-
-    if (value === '') {
-      setDurationInputs((current) => ({
-        ...current,
-      }));
-
-      setDurationErrors((current) => ({
-        ...current,
-        [day]: undefined,
-      }));
-
-      onMinutesChange(day, 0);
-      return;
-    }
-
-    const parsed = parseDuration(value);
+    const parsed = parseDuration(trimmed);
 
     if (parsed === null) {
-      setDurationErrors((current) => ({
-        ...current,
-        [day]: invalidDurationError,
-      }));
+      setError(invalidDurationError);
       return;
     }
 
-    setDurationInputs((current) => ({
-      ...current,
-      [day]: formatDuration(parsed),
-    }));
-
-    setDurationErrors((current) => ({
-      ...current,
-      [day]: undefined,
-    }));
-
+    setError(null);
+    setInputValue(formatDuration(parsed));
     onMinutesChange(day, parsed);
   };
 
   return (
     <div>
       <input
-        value={durationInputs[day]}
-        onChange={(event) =>
-          handleDurationChange(day, event.target.value)
-        }
-        onFocus={() => handleDurationFocus(day)}
-        onBlur={() => handleDurationBlur(day)}
+        value={inputValue}
+        onChange={(event) => handleChange(event.target.value)}
+        onBlur={handleBlur}
         placeholder={intervalPlaceholder}
+        aria-invalid={Boolean(error)}
       />
 
-      {durationErrors[day] && (
+      {error && (
         <small role="alert" className="field-error">
-          {durationErrors[day]}
+          {error}
         </small>
       )}
     </div>

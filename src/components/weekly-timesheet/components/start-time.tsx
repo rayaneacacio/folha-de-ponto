@@ -6,51 +6,68 @@ import { parseDuration } from '../utils/parse-duration';
 import { formatDuration } from '../utils/format-duration';
 import { useTimesheet } from '../context';
 
-interface EndTimeProps {
+interface StartTimeProps {
   day: WeekDay;
 }
 
-export const StartTime = ({ day }: EndTimeProps) => {
+export const StartTime = ({ day }: StartTimeProps) => {
   const { startTimePlaceholder, startTimeLabel, invalidTimeError } = locales;
 
   const { startTimes, setStartTimes } = useTimesheet();
-  const value = startTimes[day];
+  const contextValue = startTimes[day] ?? '';
+
+  const [prevValue, setPrevValue] = useState(contextValue);
+  const [inputValue, setInputValue] = useState(contextValue);
   const [error, setError] = useState('');
 
-  const handleStartTimeChange = (day: WeekDay, value: string) => {
+  if (prevValue !== contextValue) {
+    setPrevValue(contextValue);
+    setInputValue(contextValue);
+    setError('');
+  }
+
+  const handleChange = (newValue: string) => {
+    setInputValue(newValue);
+    if (error) setError('');
+
     setStartTimes((current) => ({
       ...current,
-      [day]: value,
+      [day]: newValue,
     }));
   };
 
-  const handleChange = (newValue: string) => {
-    handleStartTimeChange(day, newValue);
-    setError('');
-  };
-
   const handleBlur = () => {
-    if (value === '') return setError('');
+    const trimmed = inputValue.trim();
 
-    const parsed = parseDuration(value);
-    const timeMatch = formatDuration(parsed ? parsed : 0);
+    if (trimmed === '') {
+      setError('');
+      setStartTimes((current) => ({
+        ...current,
+        [day]: '',
+      }));
+      return;
+    }
 
-    if (!timeMatch) {
+    const parsed = parseDuration(trimmed);
+
+    if (parsed === null) {
       setError(invalidTimeError);
       return;
     }
 
+    const formatted = formatDuration(parsed, true);
     setError('');
+    setInputValue(formatted);
     setStartTimes((current) => ({
       ...current,
-      [day]: timeMatch,
+      [day]: formatted,
     }));
   };
 
   return (
     <div>
       <input
-        value={value}
+        value={inputValue}
         onChange={(event) => handleChange(event.target.value)}
         onBlur={handleBlur}
         aria-label={startTimeLabel.replace('{{day}}', day)}
@@ -59,9 +76,7 @@ export const StartTime = ({ day }: EndTimeProps) => {
       />
 
       {error && (
-        <small role="alert" className="field-error">
-          {error}
-        </small>
+        <small role="alert" className="field-error">{error}</small>
       )}
     </div>
   );

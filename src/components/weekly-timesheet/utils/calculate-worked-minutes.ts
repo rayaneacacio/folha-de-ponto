@@ -1,10 +1,10 @@
 import { parseDuration } from './parse-duration';
 
-export function calculateWorkedMinutes(
+export const calculateWorkedMinutes = (
   startTime: string,
   endTime: string,
   intervalMinutes: number,
-): number {
+): number => {
   if (!startTime || !endTime) return 0;
 
   const start = parseDuration(startTime);
@@ -15,4 +15,4 @@ export function calculateWorkedMinutes(
   const workedMinutes = end - start - intervalMinutes;
 
   return Math.max(0, workedMinutes);
-}
+};

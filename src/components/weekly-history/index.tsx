@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import type { WeeklyRecord } from '../../types';
 import { calculatePayment, formatCurrency, formatDate } from '../../utils/currency';
 import { locales } from './locales';
@@ -13,9 +14,11 @@ export const WeeklyHistory = ({
 }: WeeklyHistoryProps) => {
   const { weeklyHistoryTitleLabel, historyEmptyLabel, weekLabel, workedMinutesLabel } = locales;
 
-  const sortedRecords = [...records].sort((a, b) =>
-    b.weekStart.localeCompare(a.weekStart),
-  );
+  const sortedRecords = useMemo(() => {
+    return [...records].sort((a, b) =>
+      b.weekStart.localeCompare(a.weekStart),
+    );
+  }, [records]);
 
   if (sortedRecords.length === 0) {
     return (

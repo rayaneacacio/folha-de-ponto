@@ -14,43 +14,60 @@ export const EndTime = ({ day }: EndTimeProps) => {
   const { endTimePlaceholder, endTimeLabel, invalidTimeError } = locales;
 
   const { endTimes, setEndTimes } = useTimesheet();
-  const value = endTimes[day];
+  const contextValue = endTimes[day] ?? '';
+
+  const [prevValue, setPrevValue] = useState(contextValue);
+  const [inputValue, setInputValue] = useState(contextValue);
   const [error, setError] = useState('');
 
-  const handleEndTimeChange = (day: WeekDay, value: string) => {
+  if (prevValue !== contextValue) {
+    setPrevValue(contextValue);
+    setInputValue(contextValue);
+    setError('');
+  }
+
+  const handleChange = (newValue: string) => {
+    setInputValue(newValue);
+    if (error) setError('');
+
     setEndTimes((current) => ({
       ...current,
-      [day]: value,
+      [day]: newValue,
     }));
   };
 
-  const handleChange = (newValue: string) => {
-    handleEndTimeChange(day, newValue);
-    setError('');
-  };
-
   const handleBlur = () => {
-    if (value === '') return setError('');
+    const trimmed = inputValue.trim();
 
-    const parsed = parseDuration(value);
-    const timeMatch = formatDuration(parsed ? parsed : 0);
+    if (trimmed === '') {
+      setError('');
+      setEndTimes((current) => ({
+        ...current,
+        [day]: '',
+      }));
+      return;
+    }
 
-    if (!timeMatch) {
+    const parsed = parseDuration(trimmed);
+
+    if (parsed === null) {
       setError(invalidTimeError);
       return;
     }
 
+    const formatted = formatDuration(parsed, true);
     setError('');
+    setInputValue(formatted);
     setEndTimes((current) => ({
       ...current,
-      [day]: timeMatch,
+      [day]: formatted,
     }));
   };
 
   return (
     <div>
       <input
-        value={value}
+        value={inputValue}
         onChange={(event) => handleChange(event.target.value)}
         onBlur={handleBlur}
         aria-label={endTimeLabel.replace('{{day}}', day)}
