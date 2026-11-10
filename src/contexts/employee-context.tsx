@@ -16,6 +16,7 @@ interface EmployeeContextData {
   selectEmployee: (id: string) => void;
   createEmployee: (data: Omit<Employee, 'id'>) => Promise<Employee>;
   updateEmployeeRate: (id: string, newRate: number) => Promise<void>;
+  deleteEmployee: (id: string) => Promise<void>;
 }
 
 const EmployeeContext = createContext<EmployeeContextData>(
@@ -72,6 +73,12 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const deleteEmployee = async (id: string) => {
+    await api.deleteEmployee(id);
+    setEmployees((current) => current.filter((emp) => emp.id !== id));
+    setSelectedEmployeeId((current) => (current === id ? '' : current));
+  };
+
   return (
     <EmployeeContext.Provider
       value={{
@@ -82,6 +89,7 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
         selectEmployee: setSelectedEmployeeId,
         createEmployee,
         updateEmployeeRate,
+        deleteEmployee,
       }}
     >
       {children}
@@ -89,6 +97,7 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useEmployees = () => {
   const context = useContext(EmployeeContext);
   if (!context) {

@@ -29,6 +29,11 @@ export const api = {
     return res.json();
   },
 
+  async deleteEmployee(id: string): Promise<void> {
+    const res = await fetch(`${BASE_URL}/employees/${id}`, { method: 'DELETE' });
+    if (!res.ok) throw new Error('Erro ao excluir funcionário');
+  },
+
   async getWeeklyRecords(): Promise<WeeklyRecord[]> {
     const res = await fetch(`${BASE_URL}/weeklyRecords`);
     if (!res.ok) throw new Error('Erro ao buscar registros semanais');
@@ -59,5 +64,10 @@ export const api = {
     });
     if (!res.ok) throw new Error('Erro ao atualizar registro');
     return res.json();
+  },
+
+  async deleteWeeklyRecord(id: string): Promise<void> {
+    const res = await fetch(`${BASE_URL}/weeklyRecords/${id}`, { method: 'DELETE' });
+    if (!res.ok) throw new Error('Erro ao excluir registro de ponto');
   },
 };

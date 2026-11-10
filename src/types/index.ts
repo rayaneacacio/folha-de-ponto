@@ -26,6 +26,17 @@ export interface Employee {
   hourlyRate: number;
 }
 
+export interface DayEntry {
+  morningStart: string;
+  morningEnd: string;
+  afternoonStart: string;
+  afternoonEnd: string;
+}
+
+export type DayEntryField = keyof DayEntry;
+
+export type DailyEntries = Record<WeekDay, DayEntry>;
+
 export type DailyMinutes = Record<WeekDay, number>;
 
 export interface WeeklyRecord {
@@ -33,6 +44,7 @@ export interface WeeklyRecord {
   employeeId: string;
   weekStart: string;
   hourlyRate: number;
+  entries?: DailyEntries;
   minutes: DailyMinutes;
   createdAt: string;
   updatedAt: string;

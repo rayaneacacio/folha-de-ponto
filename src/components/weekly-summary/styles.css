@@ -1,0 +1,15 @@
+.container-weekly-summary {
+  margin-top: 15px;
+}
+
+.weekly-summary {
+  margin-top: 24px;
+}
+
+.weekly-summary .no-record td {
+  opacity: 0.55;
+}
+
+.weekly-summary tfoot td {
+  font-weight: 700;
+}

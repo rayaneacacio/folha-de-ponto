@@ -1,4 +1,588 @@
 {
-  "employees": [],
-  "weeklyRecords": []
+  "employees": [
+    {
+      "name": "Meire",
+      "pixKey": "85992741400",
+      "hourlyRate": 7.5,
+      "id": "qI4adbYyIaE"
+    },
+    {
+      "name": "Edy",
+      "pixKey": "05379855300",
+      "hourlyRate": 7.5,
+      "id": "9qHbshXBYyw"
+    },
+    {
+      "name": "Rosangela",
+      "pixKey": "085991440769",
+      "hourlyRate": 7.5,
+      "id": "PTOZXt0J_h4"
+    },
+    {
+      "name": "Sara",
+      "pixKey": "63054738388",
+      "hourlyRate": 7.5,
+      "id": "9GST1CUVKz8"
+    },
+    {
+      "name": "Fabiana",
+      "pixKey": "97806285334",
+      "hourlyRate": 7.5,
+      "id": "bkPACYs9ALY"
+    },
+    {
+      "name": "Netinha",
+      "pixKey": "85987522990",
+      "hourlyRate": 7.5,
+      "id": "JBEkh_fIXDE"
+    },
+    {
+      "name": "Liliane",
+      "pixKey": "85991117584",
+      "hourlyRate": 7.5,
+      "id": "M96aAoY4BlI"
+    },
+    {
+      "name": "Neuda",
+      "pixKey": "56122055387",
+      "hourlyRate": 7.5,
+      "id": "CJ2z9UsN7xk"
+    },
+    {
+      "name": "Karine",
+      "pixKey": "kmfrota321@gmail.com",
+      "hourlyRate": 7.5,
+      "id": "gk01PpjOR4E"
+    },
+    {
+      "name": "Gilson",
+      "pixKey": "0",
+      "hourlyRate": 7.5,
+      "id": "RP54swrWzHo"
+    },
+    {
+      "name": "Katia",
+      "pixKey": "katiaferreiragomes2017@gmail.com",
+      "hourlyRate": 5,
+      "id": "BBDTmw0yCd4"
+    },
+    {
+      "name": "Mario",
+      "pixKey": "mariofariasalves207@gmail.com",
+      "hourlyRate": 7.5,
+      "id": "TekuEPKbdIk"
+    }
+  ],
+  "weeklyRecords": [
+    {
+      "id": "JEhYSgA7Rsc",
+      "employeeId": "qI4adbYyIaE",
+      "weekStart": "2026-11-02",
+      "hourlyRate": 7.5,
+      "minutes": {
+        "Segunda-feira": 0,
+        "Terça-feira": 129,
+        "Quarta-feira": 120,
+        "Quinta-feira": 115,
+        "Sexta-feira": 122,
+        "Sábado": 0,
+        "Domingo": 0
+      },
+      "createdAt": "2026-11-06T22:45:50.043Z",
+      "updatedAt": "2026-11-06T22:53:44.477Z"
+    },
+    {
+      "id": "MqyDWjusQIs",
+      "employeeId": "9qHbshXBYyw",
+      "weekStart": "2026-11-02",
+      "hourlyRate": 7.5,
+      "minutes": {
+        "Segunda-feira": 0,
+        "Terça-feira": 135,
+        "Quarta-feira": 131,
+        "Quinta-feira": 137,
+        "Sexta-feira": 127,
+        "Sábado": 0,
+        "Domingo": 0
+      },
+      "createdAt": "2026-11-06T22:55:11.461Z",
+      "updatedAt": "2026-11-06T22:56:23.228Z"
+    },
+    {
+      "id": "7wFYGAM8EA8",
+      "employeeId": "PTOZXt0J_h4",
+      "weekStart": "2026-11-02",
+      "hourlyRate": 7.5,
+      "minutes": {
+        "Segunda-feira": 0,
+        "Terça-feira": 120,
+        "Quarta-feira": 120,
+        "Quinta-feira": 110,
+        "Sexta-feira": 0,
+        "Sábado": 0,
+        "Domingo": 0
+      },
+      "createdAt": "2026-11-06T22:59:29.505Z",
+      "updatedAt": "2026-11-06T23:00:25.421Z"
+    },
+    {
+      "id": "MMphKcNA9KM",
+      "employeeId": "9GST1CUVKz8",
+      "weekStart": "2026-11-02",
+      "hourlyRate": 7.5,
+      "minutes": {
+        "Segunda-feira": 0,
+        "Terça-feira": 120,
+        "Quarta-feira": 120,
+        "Quinta-feira": 127,
+        "Sexta-feira": 132,
+        "Sábado": 0,
+        "Domingo": 0
+      },
+      "createdAt": "2026-11-06T23:01:31.204Z",
+      "updatedAt": "2026-11-06T23:02:13.821Z"
+    },
+    {
+      "id": "2raZ6p-0Rm8",
+      "employeeId": "bkPACYs9ALY",
+      "weekStart": "2026-11-02",
+      "hourlyRate": 7.5,
+      "minutes": {
+        "Segunda-feira": 0,
+        "Terça-feira": 120,
+        "Quarta-feira": 120,
+        "Quinta-feira": 115,
+        "Sexta-feira": 120,
+        "Sábado": 0,
+        "Domingo": 0
+      },
+      "createdAt": "2026-11-06T23:04:47.453Z",
+      "updatedAt": "2026-11-06T23:06:28.520Z"
+    },
+    {
+      "id": "jq8s5NVJipk",
+      "employeeId": "JBEkh_fIXDE",
+      "weekStart": "2026-11-02",
+      "hourlyRate": 7.5,
+      "minutes": {
+        "Segunda-feira": 0,
+        "Terça-feira": 120,
+        "Quarta-feira": 125,
+        "Quinta-feira": 120,
+        "Sexta-feira": 120,
+        "Sábado": 0,
+        "Domingo": 0
+      },
+      "createdAt": "2026-11-06T23:08:26.335Z",
+      "updatedAt": "2026-11-06T23:08:59.136Z"
+    },
+    {
+      "id": "Sz37cl2o83M",
+      "employeeId": "M96aAoY4BlI",
+      "weekStart": "2026-11-02",
+      "hourlyRate": 7.5,
+      "minutes": {
+        "Segunda-feira": 0,
+        "Terça-feira": 120,
+        "Quarta-feira": 120,
+        "Quinta-feira": 120,
+        "Sexta-feira": 126,
+        "Sábado": 0,
+        "Domingo": 0
+      },
+      "createdAt": "2026-11-06T23:09:53.502Z",
+      "updatedAt": "2026-11-06T23:10:15.368Z"
+    },
+    {
+      "id": "jTNBVrIQJ_w",
+      "employeeId": "CJ2z9UsN7xk",
+      "weekStart": "2026-11-02",
+      "hourlyRate": 7.5,
+      "minutes": {
+        "Segunda-feira": 0,
+        "Terça-feira": 120,
+        "Quarta-feira": 120,
+        "Quinta-feira": 0,
+        "Sexta-feira": 0,
+        "Sábado": 0,
+        "Domingo": 0
+      },
+      "createdAt": "2026-11-06T23:12:30.284Z",
+      "updatedAt": "2026-11-06T23:12:35.101Z"
+    },
+    {
+      "id": "f5qTJDUzrpM",
+      "employeeId": "gk01PpjOR4E",
+      "weekStart": "2026-11-02",
+      "hourlyRate": 7.5,
+      "minutes": {
+        "Segunda-feira": 0,
+        "Terça-feira": 120,
+        "Quarta-feira": 0,
+        "Quinta-feira": 90,
+        "Sexta-feira": 115,
+        "Sábado": 0,
+        "Domingo": 0
+      },
+      "createdAt": "2026-11-06T23:13:33.784Z",
+      "updatedAt": "2026-11-06T23:14:30.351Z"
+    },
+    {
+      "id": "SnY0yTs5paA",
+      "employeeId": "RP54swrWzHo",
+      "weekStart": "2026-11-02",
+      "hourlyRate": 7.5,
+      "minutes": {
+        "Segunda-feira": 0,
+        "Terça-feira": 120,
+        "Quarta-feira": 120,
+        "Quinta-feira": 120,
+        "Sexta-feira": 120,
+        "Sábado": 0,
+        "Domingo": 0
+      },
+      "createdAt": "2026-11-06T23:15:39.267Z",
+      "updatedAt": "2026-11-06T23:16:07.583Z"
+    },
+    {
+      "id": "8M_O2-bnzY0",
+      "employeeId": "BBDTmw0yCd4",
+      "weekStart": "2026-11-02",
+      "hourlyRate": 5,
+      "minutes": {
+        "Segunda-feira": 0,
+        "Terça-feira": 120,
+        "Quarta-feira": 120,
+        "Quinta-feira": 90,
+        "Sexta-feira": 115,
+        "Sábado": 0,
+        "Domingo": 0
+      },
+      "createdAt": "2026-11-06T23:18:12.083Z",
+      "updatedAt": "2026-11-06T23:19:04.776Z"
+    },
+    {
+      "id": "kSbKcyGanr4",
+      "employeeId": "TekuEPKbdIk",
+      "weekStart": "2026-11-02",
+      "hourlyRate": 7.5,
+      "minutes": {
+        "Segunda-feira": 0,
+        "Terça-feira": 120,
+        "Quarta-feira": 120,
+        "Quinta-feira": 110,
+        "Sexta-feira": 105,
+        "Sábado": 0,
+        "Domingo": 0
+      },
+      "createdAt": "2026-11-06T23:20:54.882Z",
+      "updatedAt": "2026-11-06T23:21:27.315Z"
+    },
+    {
+      "id": "taB87nRcE9g",
+      "employeeId": "bkPACYs9ALY",
+      "weekStart": "2026-11-09",
+      "createdAt": "2026-11-10T12:02:04.687Z",
+      "updatedAt": "2026-11-10T15:38:28.918Z",
+      "entries": {
+        "Segunda-feira": {
+          "morningStart": "07:00",
+          "morningEnd": "11:00",
+          "afternoonStart": "13:00",
+          "afternoonEnd": "17:00"
+        },
+        "Terça-feira": {
+          "morningStart": "",
+          "morningEnd": "",
+          "afternoonStart": "",
+          "afternoonEnd": ""
+        },
+        "Quarta-feira": {
+          "morningStart": "",
+          "morningEnd": "",
+          "afternoonStart": "",
+          "afternoonEnd": ""
+        },
+        "Quinta-feira": {
+          "morningStart": "",
+          "morningEnd": "",
+          "afternoonStart": "",
+          "afternoonEnd": ""
+        },
+        "Sexta-feira": {
+          "morningStart": "",
+          "morningEnd": "",
+          "afternoonStart": "",
+          "afternoonEnd": ""
+        },
+        "Sábado": {
+          "morningStart": "",
+          "morningEnd": "",
+          "afternoonStart": "",
+          "afternoonEnd": ""
+        },
+        "Domingo": {
+          "morningStart": "",
+          "morningEnd": "",
+          "afternoonStart": "",
+          "afternoonEnd": ""
+        }
+      },
+      "minutes": {
+        "Segunda-feira": 480,
+        "Terça-feira": 0,
+        "Quarta-feira": 0,
+        "Quinta-feira": 0,
+        "Sexta-feira": 0,
+        "Sábado": 0,
+        "Domingo": 0
+      },
+      "hourlyRate": 7.5
+    },
+    {
+      "id": "dUdeIlQ_JSs",
+      "employeeId": "9GST1CUVKz8",
+      "weekStart": "2026-11-09",
+      "createdAt": "2026-11-10T12:52:18.178Z",
+      "updatedAt": "2026-11-10T15:28:54.244Z",
+      "entries": {
+        "Segunda-feira": {
+          "morningStart": "07:00",
+          "morningEnd": "11:00",
+          "afternoonStart": "13:00",
+          "afternoonEnd": "17:00"
+        },
+        "Terça-feira": {
+          "morningStart": "07:00",
+          "morningEnd": "11:00",
+          "afternoonStart": "13:00",
+          "afternoonEnd": "17:00"
+        },
+        "Quarta-feira": {
+          "morningStart": "07:00",
+          "morningEnd": "11:00",
+          "afternoonStart": "13:00",
+          "afternoonEnd": "17:00"
+        },
+        "Quinta-feira": {
+          "morningStart": "07:00",
+          "morningEnd": "11:00",
+          "afternoonStart": "13:00",
+          "afternoonEnd": "17:00"
+        },
+        "Sexta-feira": {
+          "morningStart": "07:00",
+          "morningEnd": "11:00",
+          "afternoonStart": "13:00",
+          "afternoonEnd": "17:00"
+        },
+        "Sábado": {
+          "morningStart": "07:00",
+          "morningEnd": "11:00",
+          "afternoonStart": "13:00",
+          "afternoonEnd": "17:00"
+        },
+        "Domingo": {
+          "morningStart": "",
+          "morningEnd": "",
+          "afternoonStart": "",
+          "afternoonEnd": ""
+        }
+      },
+      "minutes": {
+        "Segunda-feira": 480,
+        "Terça-feira": 480,
+        "Quarta-feira": 480,
+        "Quinta-feira": 480,
+        "Sexta-feira": 480,
+        "Sábado": 480,
+        "Domingo": 0
+      },
+      "hourlyRate": 7.5
+    },
+    {
+      "id": "8YYLNusv25Q",
+      "employeeId": "9qHbshXBYyw",
+      "weekStart": "2026-11-09",
+      "createdAt": "2026-11-10T13:00:30.614Z",
+      "updatedAt": "2026-11-10T13:00:30.614Z",
+      "entries": {
+        "Segunda-feira": {
+          "morningStart": "",
+          "morningEnd": "",
+          "afternoonStart": "",
+          "afternoonEnd": ""
+        },
+        "Terça-feira": {
+          "morningStart": "",
+          "morningEnd": "",
+          "afternoonStart": "",
+          "afternoonEnd": ""
+        },
+        "Quarta-feira": {
+          "morningStart": "",
+          "morningEnd": "",
+          "afternoonStart": "",
+          "afternoonEnd": ""
+        },
+        "Quinta-feira": {
+          "morningStart": "",
+          "morningEnd": "",
+          "afternoonStart": "",
+          "afternoonEnd": ""
+        },
+        "Sexta-feira": {
+          "morningStart": "07:00",
+          "morningEnd": "11:00",
+          "afternoonStart": "13:00",
+          "afternoonEnd": "17:00"
+        },
+        "Sábado": {
+          "morningStart": "",
+          "morningEnd": "",
+          "afternoonStart": "",
+          "afternoonEnd": ""
+        },
+        "Domingo": {
+          "morningStart": "",
+          "morningEnd": "",
+          "afternoonStart": "",
+          "afternoonEnd": ""
+        }
+      },
+      "minutes": {
+        "Segunda-feira": 0,
+        "Terça-feira": 0,
+        "Quarta-feira": 0,
+        "Quinta-feira": 0,
+        "Sexta-feira": 480,
+        "Sábado": 0,
+        "Domingo": 0
+      },
+      "hourlyRate": 7.5
+    },
+    {
+      "id": "PiO-oEYixWQ",
+      "employeeId": "JBEkh_fIXDE",
+      "weekStart": "2026-11-09",
+      "createdAt": "2026-11-10T15:19:04.501Z",
+      "updatedAt": "2026-11-10T15:19:08.515Z",
+      "entries": {
+        "Segunda-feira": {
+          "morningStart": "07:00",
+          "morningEnd": "11:00",
+          "afternoonStart": "13:00",
+          "afternoonEnd": "17:00"
+        },
+        "Terça-feira": {
+          "morningStart": "07:00",
+          "morningEnd": "11:00",
+          "afternoonStart": "13:00",
+          "afternoonEnd": "17:00"
+        },
+        "Quarta-feira": {
+          "morningStart": "",
+          "morningEnd": "",
+          "afternoonStart": "",
+          "afternoonEnd": ""
+        },
+        "Quinta-feira": {
+          "morningStart": "07:00",
+          "morningEnd": "11:00",
+          "afternoonStart": "13:00",
+          "afternoonEnd": "17:00"
+        },
+        "Sexta-feira": {
+          "morningStart": "",
+          "morningEnd": "",
+          "afternoonStart": "",
+          "afternoonEnd": ""
+        },
+        "Sábado": {
+          "morningStart": "",
+          "morningEnd": "",
+          "afternoonStart": "",
+          "afternoonEnd": ""
+        },
+        "Domingo": {
+          "morningStart": "",
+          "morningEnd": "",
+          "afternoonStart": "",
+          "afternoonEnd": ""
+        }
+      },
+      "minutes": {
+        "Segunda-feira": 480,
+        "Terça-feira": 480,
+        "Quarta-feira": 0,
+        "Quinta-feira": 480,
+        "Sexta-feira": 0,
+        "Sábado": 0,
+        "Domingo": 0
+      },
+      "hourlyRate": 7.5
+    },
+    {
+      "id": "8F_6QdDWqNM",
+      "employeeId": "gk01PpjOR4E",
+      "weekStart": "2026-11-09",
+      "createdAt": "2026-11-10T15:31:36.061Z",
+      "updatedAt": "2026-11-10T15:33:17.304Z",
+      "entries": {
+        "Segunda-feira": {
+          "morningStart": "07:10",
+          "morningEnd": "11:00",
+          "afternoonStart": "13:20",
+          "afternoonEnd": "19:00"
+        },
+        "Terça-feira": {
+          "morningStart": "07:00",
+          "morningEnd": "11:00",
+          "afternoonStart": "13:00",
+          "afternoonEnd": "17:00"
+        },
+        "Quarta-feira": {
+          "morningStart": "",
+          "morningEnd": "",
+          "afternoonStart": "",
+          "afternoonEnd": ""
+        },
+        "Quinta-feira": {
+          "morningStart": "",
+          "morningEnd": "",
+          "afternoonStart": "",
+          "afternoonEnd": ""
+        },
+        "Sexta-feira": {
+          "morningStart": "",
+          "morningEnd": "",
+          "afternoonStart": "",
+          "afternoonEnd": ""
+        },
+        "Sábado": {
+          "morningStart": "",
+          "morningEnd": "",
+          "afternoonStart": "",
+          "afternoonEnd": ""
+        },
+        "Domingo": {
+          "morningStart": "",
+          "morningEnd": "",
+          "afternoonStart": "",
+          "afternoonEnd": ""
+        }
+      },
+      "minutes": {
+        "Segunda-feira": 570,
+        "Terça-feira": 480,
+        "Quarta-feira": 0,
+        "Quinta-feira": 0,
+        "Sexta-feira": 0,
+        "Sábado": 0,
+        "Domingo": 0
+      },
+      "hourlyRate": 7.5
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

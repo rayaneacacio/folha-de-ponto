@@ -1,55 +1,43 @@
-import type React from 'react';
-import { useMemo } from 'react';
-
+import { useMemo, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import {
   WEEK_DAYS,
-  type DailyMinutes,
+  type DailyEntries,
+  type DayEntryField,
   type Employee,
   type WeekDay,
   type WeeklyRecord,
 } from '../../types';
 import { calculatePayment, formatCurrency } from '../../utils/currency';
-import { calculateWorkedMinutes } from './utils/calculate-worked-minutes';
+import { api } from '../../services/api';
 import { formatDuration } from './utils/format-duration';
-import { TimesheetProvider, useTimesheet } from './context';
-import { StartTime } from './components/start-time';
-import { EndTime } from './components/end-time';
-import { Interval } from './components/interval';
+import { DEFAULT_DAY_ENTRY, isOutOfOrder, normalizeEntries, toDailyMinutes } from './utils/time';
+import { TimeInput } from './components/time-input';
 import { Pix } from './components/pix';
 import { locales } from './locales';
-import { api } from '../../services/api';
-
+import { DeleteEmployee } from './components/delete-employee';
 import './styles.css';
-
-const createEmptyMinutes = (): DailyMinutes => {
-  return {
-    'Segunda-feira': 0,
-    'Terça-feira': 0,
-    'Quarta-feira': 0,
-    'Quinta-feira': 0,
-    'Sexta-feira': 0,
-    Sábado: 0,
-    Domingo: 0,
-  };
-};
 
 export interface WeeklyTimesheetProps {
   employee: Employee;
   weekStart: string;
   weeklyRecords: WeeklyRecord[];
-  onRecordsChange: (records: WeeklyRecord[]) => void;
-  onEmployeeRateChange: (employeeId: string, newRate: number) => void;
+  onRecordsChange: Dispatch<SetStateAction<WeeklyRecord[]>>;
+  onEmployeeRateChange: (employeeId: string, newRate: number) => Promise<void>;
 }
 
-export const WeeklyTimesheet = (props: WeeklyTimesheetProps) => {
-  return (
-    <TimesheetProvider>
-      <WeeklyTimesheetContainer {...props} />
-    </TimesheetProvider>
-  );
-};
+const FIELDS: {
+  field: DayEntryField;
+  header: keyof typeof locales;
+  placeholder: keyof typeof locales;
+  label: keyof typeof locales;
+}[] = [
+  { field: 'morningStart', header: 'morningStartHeader', placeholder: 'morningStartPlaceholder', label: 'morningStartLabel' },
+  { field: 'morningEnd', header: 'morningEndHeader', placeholder: 'morningEndPlaceholder', label: 'morningEndLabel' },
+  { field: 'afternoonStart', header: 'afternoonStartHeader', placeholder: 'afternoonStartPlaceholder', label: 'afternoonStartLabel' },
+  { field: 'afternoonEnd', header: 'afternoonEndHeader', placeholder: 'afternoonEndPlaceholder', label: 'afternoonEndLabel' },
+];
 
-export const WeeklyTimesheetContainer = ({
+export const WeeklyTimesheet = ({
   employee,
   weekStart,
   weeklyRecords,
@@ -59,85 +47,128 @@ export const WeeklyTimesheetContainer = ({
   const {
     hourlyRateLabel,
     dayOfWeekHeader,
-    startTimeHeader,
-    endTimeHeader,
-    intervalHeader,
     paymentHeader,
     weeklyTotal,
+    periodOrderError,
+    afternoonOverlapError,
+    saveError,
+    fillDefaultButton,
+    fillDefaultLabel,
   } = locales;
 
-  const { startTimes, endTimes } = useTimesheet();
+  const currentRecord = useMemo(
+    () =>
+      weeklyRecords.find(
+        (rec) => rec.employeeId === employee.id && rec.weekStart === weekStart,
+      ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
-  const currentRecord = useMemo(() => {
-    return weeklyRecords.find(
-      (rec) => rec.employeeId === employee.id && rec.weekStart === weekStart,
-    );
-  }, [weeklyRecords, employee.id, weekStart]);
+  const initialRate = currentRecord?.hourlyRate ?? employee.hourlyRate ?? 0;
 
-  const minutes = currentRecord?.minutes ?? createEmptyMinutes();
-  const hourlyRate = currentRecord?.hourlyRate ?? employee.hourlyRate ?? 0;
+  const [entries, setEntries] = useState<DailyEntries>(() =>
+    normalizeEntries(currentRecord?.entries),
+  );
+  const [hourlyRate, setHourlyRate] = useState(initialRate);
+  const [rateInput, setRateInput] = useState(String(initialRate));
 
-  const persistRecord = async(updates: Partial<WeeklyRecord>) => {
-    try {
-      if (currentRecord) {
-        const updated = await api.updateWeeklyRecord(currentRecord.id, updates);
-        onRecordsChange(
-          weeklyRecords.map((rec) => (rec.id === currentRecord.id ? updated : rec)),
-        );
-      } else {
+  const recordIdRef = useRef<string | undefined>(currentRecord?.id);
+  const saveQueueRef = useRef<Promise<void>>(Promise.resolve());
+
+  const persist = (entriesToSave: DailyEntries, rateToSave: number) => {
+    const payload = {
+      entries: entriesToSave,
+      minutes: toDailyMinutes(entriesToSave),
+      hourlyRate: rateToSave,
+    };
+
+    saveQueueRef.current = saveQueueRef.current
+      .then(async () => {
+        const recordId = recordIdRef.current;
+
+        if (recordId) {
+          const updated = await api.updateWeeklyRecord(recordId, payload);
+          onRecordsChange((current) =>
+            current.map((rec) => (rec.id === recordId ? updated : rec)),
+          );
+          return;
+        }
+
         const now = new Date().toISOString();
-        const newRecord: WeeklyRecord = {
+        const created = await api.createWeeklyRecord({
           id: crypto.randomUUID(),
           employeeId: employee.id,
           weekStart,
-          hourlyRate,
-          minutes: createEmptyMinutes(),
           createdAt: now,
           updatedAt: now,
-          ...updates,
-        };
+          ...payload,
+        });
 
-        const created = await api.createWeeklyRecord(newRecord);
-        onRecordsChange([...weeklyRecords, created]);
-      }
-    } catch (error) {
-      console.error('Erro ao sincronizar ponto:', error);
-    }
+        recordIdRef.current = created.id;
+        onRecordsChange((current) => [...current, created]);
+      })
+      .catch((error) => {
+        console.error(saveError, error);
+      });
   };
 
-  const handleMinutesChange = (day: WeekDay, value: number) => {
-    const updatedMinutes = {
-      ...minutes,
-      [day]: value,
+  const handleEntryChange = (day: WeekDay, field: DayEntryField, value: string) => {
+    const nextEntries: DailyEntries = {
+      ...entries,
+      [day]: { ...entries[day], [field]: value },
     };
-    persistRecord({ minutes: updatedMinutes });
+
+    setEntries(nextEntries);
+    persist(nextEntries, hourlyRate);
   };
 
-  const handleHourlyRateChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const rawValue = event.target.value;
-    if (rawValue === '') return;
+  const handleFillDefault = (day: WeekDay) => {
+    const nextEntries: DailyEntries = {
+      ...entries,
+      [day]: { ...DEFAULT_DAY_ENTRY },
+    };
 
-    const value = Number(rawValue);
-    if (!Number.isFinite(value) || value < 0) return;
-
-    await persistRecord({ hourlyRate: value });
-    onEmployeeRateChange(employee.id, value);
+    setEntries(nextEntries);
+    persist(nextEntries, hourlyRate);
   };
 
-  const workedMinutesByDay = useMemo(() => {
-    return WEEK_DAYS.reduce((acc, day) => {
-      acc[day] = calculateWorkedMinutes(
-        startTimes[day],
-        endTimes[day],
-        minutes[day],
-      );
-      return acc;
-    }, {} as Record<WeekDay, number>);
-  }, [startTimes, endTimes, minutes]);
+  const handleRateBlur = () => {
+    const value = Number(rateInput);
 
-  const totalMinutes = useMemo(() => {
-    return WEEK_DAYS.reduce((sum, day) => sum + workedMinutesByDay[day], 0);
-  }, [workedMinutesByDay]);
+    if (rateInput.trim() === '' || !Number.isFinite(value) || value < 0) {
+      setRateInput(String(hourlyRate));
+      return;
+    }
+
+    if (value === hourlyRate) return;
+
+    setHourlyRate(value);
+    persist(entries, value);
+    onEmployeeRateChange(employee.id, value).catch(() => undefined);
+  };
+
+  const getFieldError = (day: WeekDay, field: DayEntryField) => {
+    const entry = entries[day];
+
+    if (field === 'morningEnd' && isOutOfOrder(entry.morningStart, entry.morningEnd)) {
+      return periodOrderError;
+    }
+    if (field === 'afternoonStart' && isOutOfOrder(entry.morningEnd, entry.afternoonStart)) {
+      return afternoonOverlapError;
+    }
+    if (field === 'afternoonEnd' && isOutOfOrder(entry.afternoonStart, entry.afternoonEnd)) {
+      return periodOrderError;
+    }
+    return undefined;
+  };
+
+  const workedMinutesByDay = useMemo(() => toDailyMinutes(entries), [entries]);
+
+  const totalMinutes = WEEK_DAYS.reduce(
+    (sum, day) => sum + workedMinutesByDay[day],
+    0,
+  );
 
   const totalPayment = calculatePayment(totalMinutes, hourlyRate);
 
@@ -153,8 +184,9 @@ export const WeeklyTimesheetContainer = ({
           type="number"
           min="0"
           step="0.01"
-          value={hourlyRate}
-          onChange={handleHourlyRateChange}
+          value={rateInput}
+          onChange={(event) => setRateInput(event.target.value)}
+          onBlur={handleRateBlur}
         />
       </label>
 
@@ -163,9 +195,9 @@ export const WeeklyTimesheetContainer = ({
           <thead>
             <tr>
               <th>{dayOfWeekHeader}</th>
-              <th>{startTimeHeader}</th>
-              <th>{endTimeHeader}</th>
-              <th>{intervalHeader}</th>
+              {FIELDS.map(({ field, header }) => (
+                <th key={field}>{locales[header]}</th>
+              ))}
               <th>{paymentHeader}</th>
             </tr>
           </thead>
@@ -173,16 +205,33 @@ export const WeeklyTimesheetContainer = ({
           <tbody>
             {WEEK_DAYS.map((day) => (
               <tr key={day}>
-                <td>{day}</td>
-                <td><StartTime day={day} /></td>
-                <td><EndTime day={day} /></td>
                 <td>
-                  <Interval
-                    day={day}
-                    minutes={minutes}
-                    onMinutesChange={handleMinutesChange}
-                  />
+                  <div className="day-cell">
+                    <span>{day}</span>
+                    <button
+                      type="button"
+                      className="secondary fill-default"
+                      onClick={() => handleFillDefault(day)}
+                      aria-label={fillDefaultLabel.replace('{{day}}', day)}
+                      title={fillDefaultLabel.replace('{{day}}', day)}
+                    >
+                      {fillDefaultButton}
+                    </button>
+                  </div>
                 </td>
+
+                {FIELDS.map(({ field, placeholder, label }) => (
+                  <td key={field}>
+                    <TimeInput
+                      value={entries[day][field]}
+                      placeholder={locales[placeholder]}
+                      label={locales[label].replace('{{day}}', day)}
+                      error={getFieldError(day, field)}
+                      onCommit={(value) => handleEntryChange(day, field, value)}
+                    />
+                  </td>
+                ))}
+
                 <td>
                   {formatCurrency(
                     calculatePayment(workedMinutesByDay[day], hourlyRate),
@@ -195,7 +244,7 @@ export const WeeklyTimesheetContainer = ({
           <tfoot>
             <tr>
               <td>{weeklyTotal}</td>
-              <td colSpan={3}>
+              <td colSpan={FIELDS.length}>
                 {formatDuration(totalMinutes)} ({totalMinutes} min)
               </td>
               <td>{formatCurrency(totalPayment)}</td>
@@ -203,6 +252,8 @@ export const WeeklyTimesheetContainer = ({
           </tfoot>
         </table>
       </div>
+
+      <DeleteEmployee />
     </section>
   );
 };
