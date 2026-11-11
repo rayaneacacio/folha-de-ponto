@@ -207,7 +207,7 @@ export const WeeklyTimesheet = ({
               <tr key={day}>
                 <td>
                   <div className="day-cell">
-                    <span>{day}</span>
+                    <span><strong>{day}</strong></span>
                     <button
                       type="button"
                       className="secondary fill-default"

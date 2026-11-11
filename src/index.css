@@ -28,7 +28,7 @@ button {
 }
 
 .app {
-  width: min(1100px, 100% - 32px);
+  width: 1400px;
   margin: 0 auto;
 }
 
@@ -45,7 +45,7 @@ button {
 
 h2 {
   margin-top: 0;
-  font-size: 1.15rem;
+  font-size: 20px;
 }
 
 label {
@@ -53,7 +53,7 @@ label {
   flex-direction: column;
   gap: 8px;
   color: #475569;
-  font-size: 0.875rem;
+  font-size: 20px;
   font-weight: 600;
 }
 
@@ -94,10 +94,6 @@ button:hover {
   max-width: 440px;
 }
 
-.pix-key {
-  overflow-wrap: anywhere;
-}
-
 .secondary {
   flex-shrink: 0;
   color: #4338ca;
@@ -132,7 +128,7 @@ td {
 th {
   color: #64748b;
   background: #f8fafc;
-  font-size: 0.8rem;
+  font-size: 20px;
 }
 
 td input {

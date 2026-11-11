@@ -11,7 +11,7 @@
 
 .modal {
   width: 520px;
-  height: 430px;
+  height: 470px;
   padding: 24px;
   background: white;
   border: 1px solid #e2e8f0;
@@ -24,6 +24,14 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px
+}
+
+.delete {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .employee-form {
@@ -45,5 +53,9 @@
   .employee-form {
     grid-template-columns: 1fr;
     padding: 18px;
+  }
+
+  .modal {
+    height: 485px;
   }
 }

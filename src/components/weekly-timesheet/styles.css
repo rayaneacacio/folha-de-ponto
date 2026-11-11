@@ -17,7 +17,6 @@
 
 .pix-details span {
   color: #64748b;
-  font-size: 0.8rem;
 }
 
 .pix-status {
@@ -34,7 +33,6 @@
 .fill-default {
   width: auto;
   height: auto;
-  font-size: 0.75rem;
   padding: 2px 8px;
   margin-top: 10px;
 }
@@ -46,6 +44,14 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
+}
+
+.pix-details {
+  font-size: 20px;
+}
+
+.pix-key {
+  overflow-wrap: anywhere;
 }
 
 button.danger {
@@ -61,6 +67,10 @@ button.danger:hover:not(:disabled) {
 button.danger:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+td {
+  font-size: 20px;
 }
 
 @media (max-width: 720px) {

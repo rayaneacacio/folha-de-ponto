@@ -74,6 +74,7 @@ export const EmployeeForm = () => {
             <header className="header-modal">
               <h2>{title}</h2>
               <button
+                className='delete'
                 type="button"
                 onClick={() => setModalIsOpen(false)}
                 disabled={isSubmitting}
