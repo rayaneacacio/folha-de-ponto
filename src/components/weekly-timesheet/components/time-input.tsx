@@ -71,9 +71,9 @@ export const TimeInput = ({
         inputMode="numeric"
       />
 
-      {message && (
+      {/* {message && (
         <small role="alert" className="field-error">{message}</small>
-      )}
+      )} */}
     </div>
   );
 };
