@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { WEEK_DAYS, type Employee, type WeeklyRecord } from '../../types';
 import { calculatePayment, formatCurrency } from '../../utils/currency';
 import { formatDuration } from '../weekly-timesheet/utils/format-duration';
@@ -35,8 +35,6 @@ export const WeeklySummary = ({
     noRecord,
   } = locales;
 
-  const [isSummaryOpen, setIsSummaryOpen] = useState(false);
-
   const rows = useMemo<SummaryRow[]>(() => {
     return employees.map((employee) => {
       const record = weeklyRecords.find(
@@ -64,16 +62,6 @@ export const WeeklySummary = ({
 
   return (
     <div className='container-weekly-summary'>
-      {/* <button
-        type="button"
-        onClick={() => setIsSummaryOpen((open) => !open)}
-        aria-expanded={isSummaryOpen}
-        aria-controls="weekly-summary"
-      >
-        {isSummaryOpen ? 'Ocultar total' : 'Ver total'}
-      </button>
-      {isSummaryOpen && ( */}
-
       <section className="weekly-summary">
         <h2>{title}</h2>
 
@@ -109,7 +97,6 @@ export const WeeklySummary = ({
           </table>
         </div>
       </section>
-      {/* )} */}
     </div>
   );
 };
